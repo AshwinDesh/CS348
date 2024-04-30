@@ -1,0 +1,46 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Report Form</title>
+    <link rel="stylesheet" href="{% static 'css/styles.css' %}">
+</head>
+<body>
+    <a href="{% url 'admin:index' %}" class="btn">Go to Admin</a>
+    <div class="form-container">
+        <form method="post">
+            {% csrf_token %}
+            <label for="selected_ingredients">Select ingredients:</label>
+            <select name="selected_ingredients" id="selected_ingredients" multiple>
+                {% for ingredient in ingredients %}
+                    <option value="{{ ingredient.id }}">{{ ingredient.ingredient_name }}</option>
+                {% endfor %}
+            </select>
+
+            <label for="selected_allergens">Select allergens:</label>
+            <select name="selected_allergens" id="selected_allergens" multiple>
+                {% for allergen in allergens %}
+                    <option value="{{ allergen.id }}">{{ allergen.allergen_name }}</option>
+                {% endfor %}
+            </select>
+
+            <label for="sort_by">Sort by:</label>
+            <select name="sort_by" id="sort_by">
+                <option value="recipe_name">Recipe Name</option>
+                <option value="created_at">Created At</option>
+                <!-- Add more options for other fields to sort by -->
+            </select>
+
+            <label for="sort_order">Sort order:</label>
+            <select name="sort_order" id="sort_order">
+                <option value="asc">Ascending</option>
+                <option value="desc">Descending</option>
+            </select>
+
+            <button type="submit">Generate Report</button>
+        </form>
+    </div>
+</body>
+</html>

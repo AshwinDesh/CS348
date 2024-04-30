@@ -1,0 +1,52 @@
+<h1>Report</h1>
+<table border="1">
+  <!-- Table headers -->
+  <thead>
+    <tr>
+      <th>Recipe Name</th>
+      <th>Instructions</th>
+      <th>Created At</th>
+      <th>Ingredients</th>
+      <th>Allergens</th>
+    </tr>
+  </thead>
+  <tbody>
+    <!-- Loop through recipes -->
+    {% for recipe in recipes %}
+      <tr>
+        <!-- Display recipe data -->
+        <td>{{ recipe.recipe_name }}</td>
+        <td>
+          {% if recipe.instructions|length > 100 %}
+            {{ recipe.instructions|slice:":100" }}
+            <a href="#">Read More</a>
+          {% else %}
+            {{ recipe.instructions }}
+          {% endif %}
+        </td>
+        <td>{{ recipe.created_at }}</td>
+        <td>
+          <ul>
+            {% for ingredient in recipe.ingredients.all %}
+              <li>{{ ingredient.ingredient_name }}</li>
+            {% endfor %}
+          </ul>
+        </td>
+        <td>
+          <ul>
+            {% for allergen in recipe.allergens.all %}
+              <li>{{ allergen.allergen_name }}</li>
+            {% endfor %}
+          </ul>
+        </td>
+      </tr>
+    {% endfor %}
+  </tbody>
+</table>
+
+<!-- Reselect button to go back to report form -->
+<form action="{% url 'polls:report_form' %}" method="get">
+    <button type="submit">Reselect</button>
+</form>
+</body>
+</html>
